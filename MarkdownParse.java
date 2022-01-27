@@ -10,7 +10,6 @@ public class MarkdownParse {
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
-        System.out.println("Before loop currentIndex: " + currentIndex);
         while(currentIndex < markdown.length()) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             System.out.println("Beggining of loop currentIndex: " + currentIndex);

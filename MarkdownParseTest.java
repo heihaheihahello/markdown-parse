@@ -81,7 +81,7 @@ public class MarkdownParseTest {
         ArrayList<String> output = new ArrayList<> ();
         Path fileName = Path.of("Snippet3.md");
 	    String contents = Files.readString(fileName);
-        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        ArrayList<String> links = MarkdownParse_copy3.getLinks(contents);
         output.add("https://ucsd-cse15l-w22.github.io/");
         assertEquals("test for snippet 3, using my new markdownparse", output, links);
     }

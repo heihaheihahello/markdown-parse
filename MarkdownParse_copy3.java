@@ -18,13 +18,22 @@ public class MarkdownParse_copy3 {
             } 
             //System.out.println("Beggining of loop currentIndex: " + currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
+            System.out.println("[:"+nextOpenBracket+" ]:"+nextCloseBracket);
+            if (checkempty(nextOpenBracket,nextCloseBracket,markdown)) {
+                currentIndex++;
+                continue;
+            }
             int openParen = markdown.indexOf("(", nextCloseBracket);
             //System.out.println("current openparn: " + openParen);
             if (openParen == -1) {
                 break;
             }
             int closeParen = markdown.indexOf(")", openParen);
-            
+            System.out.println("(:"+openParen+" ):"+closeParen);
+            if (checkempty(openParen,closeParen,markdown)) {
+                currentIndex = closeParen + 1;
+                continue;
+            }
             //System.out.println("current closeparn: " + closeParen);
             if(nextOpenBracket == 0 || markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!") == false){
                 toReturn.add(markdown.substring(openParen + 1, closeParen).trim());
@@ -36,11 +45,25 @@ public class MarkdownParse_copy3 {
         return toReturn;
     }
 
+    public static boolean checkempty(int startindex, int endindex, String contents) {
+        for (int i = startindex; i<endindex; i++) {
+            if (contents.substring(i, i+1).contains("\n")) {
+                if (contents.substring(i+2, i+3).contains("\n")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
     public static void main(String[] args) throws IOException {
 		Path fileName = Path.of(args[0]);
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = getLinks(contents);
         System.out.println(links);
+        ArrayList<String> output = new ArrayList<> ();
+        output.add("https://ucsd-cse15l-w22.github.io/");
         //System.out.println(contents.substring(65,67).contains("\n"));
         //System.out.println(contents.substring(67,69).contains("\n"));
         //System.out.println(contents.indexOf("\n", 0));
@@ -49,6 +72,6 @@ public class MarkdownParse_copy3 {
         //System.out.print("\n\n");
         //MarkdownParse_copy3 trytry = new MarkdownParse_copy3();
         //System.out.println(trytry.checkempty(131, 241, contents));
-        
+        System.out.println(links.equals(output));
     }
 }
